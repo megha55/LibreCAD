@@ -73,7 +73,10 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     hScrollBar->setSingleStep(50);
     hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
-    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
+    // S-MS
+    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height() / 2), 1, 0);
+                                    //hScrollBar->sizeHint().height()), 1, 0);
+    //E-MS
     connect(hScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotHScrolled(int)));
 
@@ -81,7 +84,10 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     vScrollBar->setSingleStep(50);
     vScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(vScrollBar, 0, 2);
-    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
+    // S-MS
+    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width() / 2, 0), 0, 2);
+                                    //sizeHint().width(), 0), 0, 2);
+    // E-MS
     connect(vScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotVScrolled(int)));
 
@@ -142,7 +148,12 @@ QG_GraphicView::~QG_GraphicView() {
  * @return width of widget.
  */
 int QG_GraphicView::getWidth() {
-    return width() - vScrollBar->sizeHint().width();
+    // Commented MS
+    //return width() - vScrollBar->sizeHint().width();
+    // S-MS
+    int halfwidth = ( width() - vScrollBar->sizeHint().width() ) / 2;
+    return halfwidth;
+    // E-MS
 }
 
 
@@ -647,6 +658,7 @@ void QG_GraphicView::adjustOffsetControls() {
     RS_DEBUG->print("V min: %d / max: %d / step: %d / value: %d\n",
                     vScrollBar->minimum(), vScrollBar->maximum(),
                     vScrollBar->pageStep(), oy);
+
 
     RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
 
